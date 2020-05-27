@@ -20,9 +20,25 @@ export class LoginComponent implements OnInit {
   login(data: NgForm) {
     console.log(data.value);
    
-    this.subscription.add(
-      this.httpClient.post().subscribe(
+  
+      this.httpClient.post<response>(
+        'http://localhost:8080/auth/login',
+        {
+          email:data.value.email,
+          password:data.value.password
+
+        }
+      ).subscribe(resData=>{
+        console.log(resData)
+      },error=>{
+        console.log(error)
+      })
        
   }
 
+}
+
+interface response{
+  id:number;
+  jwtToken:string;
 }
